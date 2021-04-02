@@ -1,11 +1,11 @@
-using Pkg
-Pkg.activate(pwd())
-using CellListsBenchmarks
+# using Pkg
+# Pkg.activate(pwd())
 using Base.Threads
 using ArgParse
 using Dates
 using JLD
 using Random
+using CellListsBenchmarks
 
 s = ArgParseSettings()
 @add_arg_table s begin
@@ -27,6 +27,8 @@ s = ArgParseSettings()
     "--seconds", "-s"
         default = 5.0
         arg_type = Float64
+    "--parallel"
+        action = :store_true
     "--dir"
         default = pwd()
         arg_type = AbstractString
@@ -34,35 +36,27 @@ end
 args = parse_args(s)
 
 # Parameters
-seed = args["seed"]
-iterations = args["iterations"]
-seconds = args["seconds"]
 n = args["n"]
 d = args["d"]
 r = args["r"]
+seed = args["seed"]
+iterations = args["iterations"]
+seconds = args["seconds"]
+parallel = args["parallel"]
 
-rng = MersenneTwister(seed)
-ts, tp = benchmark_parallel_near_neighbors(rng, n, d, r, iterations, seconds)
+trials = benchmark_near_neighbors(n, d, r, seed, iterations, seconds; parallel=parallel)
 
 # --- IO ---
-directory = joinpath(
-    args["dir"],
-    "output",
-    string(now()),
-    "parallel_near_neighbors"
-)
+directory = joinpath(args["dir"], "output", string(now()), "near_neighbors")
 if !ispath(directory)
     mkpath(directory)
 end
 
-filepath = joinpath(
-    directory,
-    "n$(n)-d$(d)-r$(r)-nthreads$(nthreads()).jld"
-)
+filepath = joinpath(directory, "n$(n)-d$(d)-r$(r)-nthreads$(nthreads()).jld")
 @info "Saving results to $(filepath)"
 JLD.save(
     filepath,
     "n", n, "d", d, "r", r, "nthreads", nthreads(),
-    "seed", seed, "iterations", iterations,
-    "ts", ts, "tp", tp
+    "seed", seed, "iterations", iterations, "parallel", parallel,
+    "trials", trials
 )

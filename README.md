@@ -29,7 +29,8 @@ julia -t 4 benchmark.jl -n 2000 -d 2 -r 0.1 -i 2
 We can submit a batch job with commands:
 
 ```bash
-sbatch benchmark.sh
+sbatch serial.sh
+sbatch parallel.sh
 ```
 
 ---
