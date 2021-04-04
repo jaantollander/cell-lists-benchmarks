@@ -5,3 +5,6 @@ CellListsBenchmarks = "61c2ef4d-6636-41ac-a606-60f4d990b9ef"
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 JLD = "4138dd39-2aa7-5051-a626-17a0bb65d9c8"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+
+[compat]
+julia = "^1.3"

@@ -1,5 +1,3 @@
-# using Pkg
-# Pkg.activate(pwd())
 using Base.Threads
 using ArgParse
 using Dates
@@ -7,6 +5,8 @@ using JLD
 using Random
 using CellListsBenchmarks
 
+
+# --- Arguments ---
 s = ArgParseSettings()
 @add_arg_table s begin
     "-n"
@@ -30,12 +30,13 @@ s = ArgParseSettings()
     "--parallel"
         action = :store_true
     "--dir"
-        default = pwd()
+        default = "output"
         arg_type = AbstractString
 end
 args = parse_args(s)
 
-# Parameters
+
+# --- Parameters ---
 n = args["n"]
 d = args["d"]
 r = args["r"]
@@ -43,12 +44,16 @@ seed = args["seed"]
 iterations = args["iterations"]
 seconds = args["seconds"]
 parallel = args["parallel"]
+directory = args["dir"]
 
-trials = benchmark_near_neighbors(n, d, r, seed, iterations, seconds; parallel=parallel)
+
+# --- Trials ---
+f = if parallel p_near_neighbors else near_neighbors end
+trials = benchmark_near_neighbors(f, n, d, r, seed, iterations, seconds)
+
 
 # --- IO ---
-directory = joinpath(args["dir"], "output", string(now()), "near_neighbors")
-if !ispath(directory)
+if !isdir(directory)
     mkpath(directory)
 end
 
@@ -58,5 +63,5 @@ JLD.save(
     filepath,
     "n", n, "d", d, "r", r, "nthreads", nthreads(),
     "seed", seed, "iterations", iterations, "parallel", parallel,
-    "trials", trials
+    "trials", trials, "timestamp", now()
 )
