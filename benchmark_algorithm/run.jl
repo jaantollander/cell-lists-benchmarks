@@ -31,6 +31,7 @@ s = ArgParseSettings()
     "--algorithm"
         help = "cell_list_serial / cell_list_parallel / brute_force / cell_lists"
         arg_type = String
+        required = true
     "--dir"
         default = "output"
         arg_type = AbstractString

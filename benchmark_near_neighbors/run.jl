@@ -3,6 +3,7 @@ using ArgParse
 using Dates
 using JLD
 using Random
+using CellLists
 using CellListsBenchmarks
 
 
