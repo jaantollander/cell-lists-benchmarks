@@ -6,8 +6,8 @@ using Plots
 gettime(x) = getfield(x, :time)
 gettime_nogc(x) = getfield(x, :time) - getfield(x, :gctime)
 
-filepath_serial = "/home/jaan/Triton/cell-lists-benchmarks/output/2021-04-02T12:44:52.387/near_neighbors/n20000-d2-r0.01-nthreads1.jld"
-filepath_parallel = "/home/jaan/Triton/cell-lists-benchmarks/output/2021-04-02T12:44:54.636/near_neighbors/n20000-d2-r0.01-nthreads4.jld"
+filepath_serial = "output/near_neighbors/n20000-d2-r0.01-nthreads1.jld"
+filepath_parallel = "output/near_neighbors/n20000-d2-r0.01-nthreads4.jld"
 
 ls = load(filepath_serial)
 lp = load(filepath_parallel)
@@ -26,7 +26,7 @@ rt = gettime_nogc.(ms) ./ gettime_nogc.(mp)
 p2 = scatter(rt, legend=false)
 plot!(p2, 1:length(rt), fill(mean(rt), length(rt)))
 
-directory = joinpath("output", "near_neighbors")
+directory = joinpath("figures", "near_neighbors")
 if !isdir(directory)
     mkpath(directory)
 end

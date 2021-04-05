@@ -21,7 +21,7 @@ pkg> add ArgParse Dates Random JLD
 We can test the `benchmark.jl` script with the commands:
 
 ```bash
-julia -t 4 benchmark.jl -n 2000 -d 2 -r 0.1 -i 2
+julia -t 4 benchmark_near_neighbors/run.jl -n 2000 -d 2 -r 0.1 -i 2 --parallel
 ```
 
 ---
@@ -29,8 +29,7 @@ julia -t 4 benchmark.jl -n 2000 -d 2 -r 0.1 -i 2
 We can submit a batch job with commands:
 
 ```bash
-sbatch serial.sh
-sbatch parallel.sh
+sbatch benchmark_near_neighbors/near_neighbors_parallel.sh
 ```
 
 ---

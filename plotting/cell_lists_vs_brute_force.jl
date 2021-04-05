@@ -12,8 +12,8 @@ files = [
     "n200-d4-r0.01.jld",
     "n300-d5-r0.01.jld"
 ]
-dir_brute_force = "/home/jaan/Triton/cell-lists-benchmarks/benchmark_algorithm/output/brute_force_serial_2021-04-04T13:22:24+0300/"
-dir_cell_lists = "/home/jaan/Triton/cell-lists-benchmarks/benchmark_algorithm/output/cell_lists_serial_2021-04-04T13:48:33+0300/"
+dir_brute_force = "output/brute_force_serial_2021-04-04T13:22:24+0300/"
+dir_cell_lists = "output/cell_lists_serial_2021-04-04T13:48:33+0300/"
 
 for file in files
     lb = load(joinpath(dir_brute_force, file))
@@ -27,13 +27,13 @@ for file in files
     meanc = [mean(gettime.(v)) for v in mc]
 
     p1 = plot(legend=false)
-    plot!(p1, ns, meanb, markershape=:circle, markersize=1, linestyle=:dash)
-    plot!(p1, ns, meanc, markershape=:circle, markersize=1, linestyle=:dash)
+    plot!(p1, ns, meanb, markershape=:circle, markersize=2, linestyle=:dash)
+    plot!(p1, ns, meanc, markershape=:circle, markersize=2, linestyle=:dash)
 
     p2 = plot(legend=false)
-    plot!(p2, ns, meanb./meanc, markershape=:circle, markersize=1, linestyle=:dash)
+    plot!(p2, ns, meanb./meanc, markershape=:circle, markersize=2, linestyle=:dash)
 
-    directory = joinpath("output", "cell_lists_vs_brute_force")
+    directory = joinpath("figures", "cell_lists_vs_brute_force")
     if !isdir(directory)
         mkpath(directory)
     end
