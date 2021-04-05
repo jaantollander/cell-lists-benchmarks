@@ -27,16 +27,16 @@ end
 vs = [foo(file) for file in files]
 ns, y, d, r = vs[1]
 
-p1 = plot(legend=false)
-plot!(p1, ns, y, markershape=:circle, markersize=2, linestyle=:dash)
-for (ns2, y2, d, r) in vs[2:end]
-    plot!(p1, ns2, y2, markershape=:circle, markersize=2, linestyle=:dash)
+p1 = plot(legend=:topleft)
+plot!(p1, ns, y, markershape=:circle, markersize=2, linestyle=:dash, label="d=$d")
+for (ns2, y2, d2, r2) in vs[2:end]
+    plot!(p1, ns2, y2, markershape=:circle, markersize=2, linestyle=:dash, label="d=$d2")
 end
 
-p2 = plot(legend=false)
-plot!(p2, ns, y./y, markershape=:circle, markersize=2, linestyle=:dash)
-for (ns2, y2, d, r) in vs[2:end]
-    plot!(p2, ns2, y2./y, markershape=:circle, markersize=2, linestyle=:dash)
+p2 = plot(legend=:topleft)
+plot!(p2, ns, y./y, markershape=:circle, markersize=2, linestyle=:dash, label="d=$d")
+for (ns2, y2, d2, r2) in vs[2:end]
+    plot!(p2, ns2, y2./y, markershape=:circle, markersize=2, linestyle=:dash, label="d=$d2")
 end
 
 directory = joinpath("figures", "dimensionality")

@@ -26,12 +26,12 @@ for file in files
     meanb = [mean(gettime.(v)) for v in mb]
     meanc = [mean(gettime.(v)) for v in mc]
 
-    p1 = plot(legend=false)
-    plot!(p1, ns, meanb, markershape=:circle, markersize=2, linestyle=:dash)
-    plot!(p1, ns, meanc, markershape=:circle, markersize=2, linestyle=:dash)
+    p1 = plot(legend=:topleft)
+    plot!(p1, ns, meanb, markershape=:circle, markersize=2, linestyle=:dash, label="brute force")
+    plot!(p1, ns, meanc, markershape=:circle, markersize=2, linestyle=:dash, label="cell lists")
 
-    p2 = plot(legend=false)
-    plot!(p2, ns, meanb./meanc, markershape=:circle, markersize=2, linestyle=:dash)
+    p2 = plot(legend=:topleft)
+    plot!(p2, ns, meanb./meanc, markershape=:circle, markersize=2, linestyle=:dash, label="brute force/cell lists")
 
     directory = joinpath("figures", "cell_lists_vs_brute_force")
     if !isdir(directory)

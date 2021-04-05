@@ -21,12 +21,12 @@ mp = [median.(tp[n]) for n in ns]
 means = [mean(gettime.(v)) for v in ms]
 meanp = [mean(gettime.(v)) for v in mp]
 
-p1 = plot(legend=false)
-plot!(p1, ns, means, markershape=:circle, markersize=2, linestyle=:dash)
-plot!(p1, ns, meanp, markershape=:circle, markersize=2, linestyle=:dash)
+p1 = plot(legend=:topleft)
+plot!(p1, ns, means, markershape=:circle, markersize=2, linestyle=:dash, label="serial")
+plot!(p1, ns, meanp, markershape=:circle, markersize=2, linestyle=:dash, label="parallel")
 
-p2 = plot(legend=false)
-plot!(p2, ns, means./meanp, markershape=:circle, markersize=2, linestyle=:dash)
+p2 = plot(legend=:bottomright)
+plot!(p2, ns, means./meanp, markershape=:circle, markersize=2, linestyle=:dash, label="serial/parallel")
 
 directory = joinpath("figures", "constructor")
 if !isdir(directory)
