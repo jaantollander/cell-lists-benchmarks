@@ -3,6 +3,9 @@ using BenchmarkTools
 using Dates
 using Plots
 
+gettime(x) = getfield(x, :time)
+gettime_nogc(x) = getfield(x, :time) - getfield(x, :gctime)
+
 files = [
     "n100-d2-r0.01.jld",
     "n100-d3-r0.01.jld",
@@ -12,11 +15,7 @@ files = [
 dir_brute_force = "/home/jaan/Triton/cell-lists-benchmarks/benchmark_algorithm/output/brute_force_serial_2021-04-04T13:22:24+0300/"
 dir_cell_lists = "/home/jaan/Triton/cell-lists-benchmarks/benchmark_algorithm/output/cell_lists_serial_2021-04-04T13:48:33+0300/"
 
-gettime(x) = getfield(x, :time)
-gettime_nogc(x) = getfield(x, :time) - getfield(x, :gctime)
-
 for file in files
-# file = files[1]
     lb = load(joinpath(dir_brute_force, file))
     lc = load(joinpath(dir_cell_lists, file))
     d, r, ns = lb["d"], lb["r"], lb["ns"]

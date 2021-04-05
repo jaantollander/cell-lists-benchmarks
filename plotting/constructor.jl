@@ -3,6 +3,9 @@ using BenchmarkTools
 using Dates
 using Plots
 
+gettime(x) = getfield(x, :time)
+gettime_nogc(x) = getfield(x, :time) - getfield(x, :gctime)
+
 filepath_serial = "/home/jaan/Triton/cell-lists-benchmarks/benchmark_algorithm/output/cell_list_constructor_serial_2021-04-04T13:27:39+0300/n1000-d2-r0.1.jld"
 filepath_parallel = "/home/jaan/Triton/cell-lists-benchmarks/benchmark_algorithm/output/cell_list_constructor_parallel_2021-04-04T13:27:40+0300/n1000-d2-r0.1.jld"
 
@@ -14,9 +17,6 @@ tp = lp["trials"]
 
 ms = [median.(ts[n]) for n in ns]
 mp = [median.(tp[n]) for n in ns]
-
-gettime(x) = getfield(x, :time)
-gettime_nogc(x) = getfield(x, :time) - getfield(x, :gctime)
 
 means = [mean(gettime.(v)) for v in ms]
 meanp = [mean(gettime.(v)) for v in mp]

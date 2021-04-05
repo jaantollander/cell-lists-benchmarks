@@ -1,6 +1,10 @@
 using JLD
 using BenchmarkTools
+using Dates
 using Plots
+
+gettime(x) = getfield(x, :time)
+gettime_nogc(x) = getfield(x, :time) - getfield(x, :gctime)
 
 filepath_serial = "/home/jaan/Triton/cell-lists-benchmarks/output/2021-04-02T12:44:52.387/near_neighbors/n20000-d2-r0.01-nthreads1.jld"
 filepath_parallel = "/home/jaan/Triton/cell-lists-benchmarks/output/2021-04-02T12:44:54.636/near_neighbors/n20000-d2-r0.01-nthreads4.jld"
@@ -11,8 +15,6 @@ d, r, n = ls["d"], ls["r"], ls["n"]
 ts = ls["trials"]
 tp = lp["trials"]
 
-gettime(x) = getfield(x, :time)
-gettime_nogc(x) = getfield(x, :time) - getfield(x, :gctime)
 ms = median.(ts)
 mp = median.(tp)
 
