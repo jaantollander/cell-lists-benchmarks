@@ -1,9 +1,12 @@
+using Base.Sys: cpu_info
 using Base.Threads
 using ArgParse
 using Dates
 using JLD
 using Random
 using CellListsBenchmarks
+
+@info cpu_info()
 
 
 # --- Arguments ---
