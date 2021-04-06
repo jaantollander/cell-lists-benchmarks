@@ -79,5 +79,5 @@ JLD.save(
     filepath,
     "ns", ns, "d", d, "r", r, "nthreads", nthreads(),
     "seed", seed, "iterations", iterations,
-    "trials", trials, "timestamp", now()
+    "trials", trials, "timestamp", now(), "cpu_info", cpu_info()
 )
