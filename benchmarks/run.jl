@@ -8,14 +8,6 @@ using CellListsBenchmarks
 
 @info cpu_info()
 
-const benchmark_functions = Dict(
-    "cell_list_serial" => benchmark_cell_list_serial,
-    "cell_list_parallel" => benchmark_cell_list_parallel,
-    "brute_force" => benchmark_brute_force,
-    "cell_lists" => benchmark_cell_lists,
-    "near_neighbors_serial" => benchmark_near_neighbors_serial,
-    "near_neighbors_parallel" => benchmark_near_neighbors_parallel,
-)
 
 # --- Arguments ---
 s = ArgParseSettings()
@@ -63,10 +55,7 @@ benchmark = args["benchmark"]
 
 
 # --- Trials ---
-b = benchmark_functions[benchmark]
-trials = Dict(
-    n => run_benchmark(b, n, d, r, seed, iterations, seconds) for n in ns
-)
+trials = [run_benchmark(benchmark, n, d, r, seed, iterations, seconds) for n in ns]
 
 
 # --- IO ---
