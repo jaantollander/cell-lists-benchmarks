@@ -8,6 +8,14 @@ using CellListsBenchmarks
 
 @info cpu_info()
 
+const benchmark_functions = Dict(
+    "cell_list_serial" => benchmark_cell_list_serial,
+    "cell_list_parallel" => benchmark_cell_list_parallel,
+    "brute_force" => benchmark_brute_force,
+    "cell_lists" => benchmark_cell_lists,
+    "near_neighbors_serial" => benchmark_near_neighbors_serial,
+    "near_neighbors_parallel" => benchmark_near_neighbors_parallel,
+)
 
 # --- Arguments ---
 s = ArgParseSettings()
@@ -31,8 +39,8 @@ s = ArgParseSettings()
     "--seconds", "-s"
         default = 1.0
         arg_type = Float64
-    "--algorithm"
-        help = "cell_list_serial / cell_list_parallel / brute_force / cell_lists"
+    "--benchmark"
+        help = "Choose one of : $(keys(benchmark_functions))"
         arg_type = String
         required = true
     "--dir"
@@ -46,30 +54,19 @@ args = parse_args(s)
 d = args["d"]
 r = args["r"]
 ns = Vector{Int}(eval(Meta.parse(args["ns"])))
+length(ns) < 1 && throw(DomainError(""))
 seed = args["seed"]
 iterations = args["iterations"]
 seconds = args["seconds"]
 directory = args["dir"]
-alg = args["algorithm"]
+benchmark = args["benchmark"]
 
 
 # --- Trials ---
-if alg == "cell_list_serial"
-    f = benchmark_cell_list_serial
-elseif alg == "cell_list_parallel"
-    f = benchmark_cell_list_parallel
-elseif alg == "brute_force"
-    f = benchmark_brute_force
-elseif alg == "cell_lists"
-    f = benchmark_cell_lists
-elseif alg == "near_neighbors_serial"
-    f = benchmark_near_neighbors_serial
-elseif alg == "near_neighbors_parallel"
-    f = benchmark_near_neighbors_parallel
-else
-    throw(DomainError("$(alg) does not exist"))
-end
-trials = Dict(n => run_benchmark(f, n, d, r, seed, iterations, seconds) for n in ns)
+b = benchmark_functions[benchmark]
+trials = Dict(
+    n => run_benchmark(b, n, d, r, seed, iterations, seconds) for n in ns
+)
 
 
 # --- IO ---

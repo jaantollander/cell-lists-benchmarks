@@ -4,4 +4,4 @@
 #SBATCH --mem=1500
 #SBATCH --output=output/near_neighbors_parallel_%j.out
 module load julia
-srun julia -t 4 run.jl -n "[20000]" -d 2 -r 0.01 -i 100 --dir "output/near_neighbors_parallel_$(date -Iseconds)" --algorithm "near_neighbors_parallel"
+srun julia -t 4 run.jl --ns "[20000]" -d 2 -r 0.01 -i 100 --dir "output/near_neighbors_parallel_$(date -Iseconds)" --benchmark "near_neighbors_parallel"
