@@ -4,7 +4,6 @@ using ArgParse
 using Dates
 using JLD
 using Random
-using CellLists
 using CellListsBenchmarks
 
 @info cpu_info()
@@ -52,8 +51,12 @@ directory = args["dir"]
 
 
 # --- Trials ---
-f = if parallel p_near_neighbors else near_neighbors end
-trials = benchmark_near_neighbors(f, n, d, r, seed, iterations, seconds)
+if parallel
+    f = benchmark_near_neighbors_parallel
+else
+    f = benchmark_near_neighbors_serial
+end
+trials = run_benchmark(f, n, d, r, seed, iterations, seconds)
 
 
 # --- IO ---

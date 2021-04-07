@@ -29,7 +29,9 @@ julia -t 4 benchmark_near_neighbors/run.jl -n 2000 -d 2 -r 0.1 -i 2 --parallel
 We can submit a batch job with commands:
 
 ```bash
-sbatch benchmark_near_neighbors/near_neighbors_parallel.sh
+mkdir output
+sbatch near_neighbors_serial.sh
+sbatch near_neighbors_parallel.sh
 ```
 
 ---

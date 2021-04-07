@@ -51,21 +51,21 @@ iterations = args["iterations"]
 seconds = args["seconds"]
 directory = args["dir"]
 alg = args["algorithm"]
-if alg == "cell_list_serial"
-    f = cell_list_serial
-elseif alg == "cell_list_parallel"
-    f = cell_list_parallel
-elseif alg == "brute_force"
-    f = brute_force
-elseif alg == "cell_lists"
-    f = cell_lists
-else
-    throw(DomainError("$(alg) does not exist"))
-end
 
 
 # --- Trials ---
-trials = Dict(n => benchmark_algorithm(f, n, d, r, seed, iterations, seconds) for n in ns)
+if alg == "cell_list_serial"
+    f = benchmark_cell_list_serial
+elseif alg == "cell_list_parallel"
+    f = benchmark_cell_list_parallel
+elseif alg == "brute_force"
+    f = benchmark_brute_force
+elseif alg == "cell_lists"
+    f = benchmark_cell_lists
+else
+    throw(DomainError("$(alg) does not exist"))
+end
+trials = Dict(n => run_benchmark(f, n, d, r, seed, iterations, seconds) for n in ns)
 
 
 # --- IO ---
