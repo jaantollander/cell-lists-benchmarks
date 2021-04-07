@@ -4,4 +4,4 @@
 #SBATCH --mem=1000
 #SBATCH --output=output/near_neighbors_serial_%j.out
 module load julia
-srun julia run.jl -n 20000 -d 2 -r 0.01 -i 100 --dir "output/near_neighbors_serial_$(date -Iseconds)"
+srun julia run.jl -n "[20000]" -d 2 -r 0.01 -i 100 --dir "output/near_neighbors_serial_$(date -Iseconds)" --algorithm "near_neighbors_serial"

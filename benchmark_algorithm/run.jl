@@ -62,6 +62,10 @@ elseif alg == "brute_force"
     f = benchmark_brute_force
 elseif alg == "cell_lists"
     f = benchmark_cell_lists
+elseif alg == "near_neighbors_serial"
+    f = benchmark_near_neighbors_serial
+elseif alg == "near_neighbors_parallel"
+    f = benchmark_near_neighbors_parallel
 else
     throw(DomainError("$(alg) does not exist"))
 end
