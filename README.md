@@ -1,7 +1,7 @@
 # Cell Lists Benchmarks
 Scripts for running [CellListsBenchmarks.jl](https://github.com/jaantollander/CellListsBenchmarks.jl) from the command line and plotting the results.
 
-The [`benchmarks/run.jl`](./benchmarks/run.jl) file contains the script to run benchmarks from the command line. We can test the scripts locally with [`benchmarks/test.sh`](./benchmarks/test.sh). The test also work as examples.
+The [`benchmarks/run.jl`](./benchmarks/run.jl) file contains the script to run benchmarks from the command line. We can test the commands locally with [`benchmarks/test.sh`](./benchmarks/test.sh). The test script also demonstrates how to use the commands.
 
 
 ## Usage on Aalto Triton Cluster
