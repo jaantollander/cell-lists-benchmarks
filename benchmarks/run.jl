@@ -6,14 +6,17 @@ using JLD
 using Random
 using CellListsBenchmarks
 
-@info cpu_info()
+@info "Julia version:" VERSION
+for (i, info) in enumerate(cpu_info())
+    @info "CPU $i: $(info.model)"
+end
 
 
 # --- Arguments ---
 s = ArgParseSettings()
 @add_arg_table s begin
     "--ns"
-        help = "String that is evaluates to `Vector{Int}` type."
+        help = "String that is evaluates to `Vector{Int}` type. For example: [1, 10, 100:50:200...]"
         default = "[1, 10, 100]"
         arg_type = String
     "-d"
@@ -55,7 +58,7 @@ benchmark = args["benchmark"]
 
 
 # --- Trials ---
-trials = [run_benchmark(benchmark, n, d, r, seed, iterations, seconds) for n in ns]
+benchmarks = [Benchmark(benchmark, n, d, r, seed, iterations, seconds) for n in ns]
 
 
 # --- IO ---
@@ -65,9 +68,4 @@ end
 
 filepath = joinpath(directory, "n$(ns[end])-d$(d)-r$(r).jld")
 @info "Saving results to $(filepath)"
-JLD.save(
-    filepath,
-    "ns", ns, "d", d, "r", r, "nthreads", nthreads(),
-    "seed", seed, "iterations", iterations,
-    "trials", trials, "timestamp", now(), "cpu_info", cpu_info()
-)
+JLD.save(filepath, "benchmarks", benchmarks)
