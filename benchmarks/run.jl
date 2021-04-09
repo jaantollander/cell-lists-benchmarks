@@ -55,8 +55,8 @@ benchmark = args["benchmark"]
 
 # --- Validate parameters ---
 length(ns) < 1 && throw(DomainError(""))
-d ≥ 1 && throw(DomainError(""))
-r > 0 && throw(DomainError(""))
+d < 1 && throw(DomainError(""))
+r ≤ 0 && throw(DomainError(""))
 
 
 # --- Trials ---
