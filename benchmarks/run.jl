@@ -60,10 +60,23 @@ r ≤ 0 && throw(DomainError(""))
 
 
 # --- Trials ---
-@info "Julia version:" VERSION
-for (i, info) in enumerate(cpu_info())
-    @info "CPU $i: $(info.model)"
+function cpus()
+    dict = Dict{String, Int}()
+    for cpu in cpu_info()
+        if haskey(dict, cpu.model)
+            dict[cpu.model] += 1
+        else
+            dict[cpu.model] = 1
+        end
+    end
+    return dict
 end
+
+@info "Julia version: $VERSION"
+for (model, num) in cpus()
+    @info "$(num) × $(model)"
+end
+
 
 benchmarks = [Benchmark(benchmark, n, d, r, seed, iterations, seconds) for n in ns]
 
