@@ -1,6 +1,8 @@
 using JLD
 using BenchmarkTools
 using Dates
+using Base.Sys
+using CellListsBenchmarks
 using Plots
 
 gettime(x) = getfield(x, :time)
@@ -14,7 +16,7 @@ lp = load(filepath_parallel)["benchmarks"]
 
 d = getfield(ls[1], :d)
 r = getfield(ls[1], :r)
-ns = getfield(ls[1], :n)
+n = getfield(ls[1], :n)
 ts = getfield(ls[1], :trials)
 tp = getfield(lp[1], :trials)
 
