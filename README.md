@@ -53,9 +53,9 @@ Then, we can submit a batch jobs to the Slurm scheduler with the `sbatch` comman
 sbatch brute_force.sh
 sbatch cell_lists.sh
 sbatch cell_list_constructor_serial.sh
-sbatch cell_list_constructor_parallel.sh
+sbatch cell_list_constructor_threads2.sh
 sbatch near_neighbors_serial.sh
-sbatch near_neighbors_parallel.sh
+sbatch near_neighbors_threads4.sh
 ```
 
 We can access the benchmark data on Triton by remote mount the work directory to our local computer. We can [remote mount](https://scicomp.aalto.fi/triton/tut/storage/#remote-mounting-using-sshfs) our work directory using `sshfs`.
