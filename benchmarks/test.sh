@@ -5,6 +5,8 @@ julia run.jl "brute_force" --ns "[100]" -d 2 -r 0.01 -i 1 -s 1.0 --dir "output/b
 
 julia run.jl "cell_lists" --ns "[100]" -d 2 -r 0.01 -i 1 -s 1.0 --dir "output/cell_lists_$TIMESTAMP"
 
+julia run.jl "cell_lists" --ns "[100]" -d 2 -r 0.01 -i 1 -s 1.0 --dir "output/cell_lists_float32_$TIMESTAMP" --float32
+
 julia run.jl "cell_list_serial" --ns "[100]" -d 2 -r 0.1 -i 1 -s 1.0 --dir "output/cell_list_constructor_serial_$(date -Iseconds)"
 
 julia -t 2 run.jl "cell_list_threads" --ns "[100]" -d 2 -r 0.1 -i 1 -s 1.0 --dir "output/cell_list_constructor_threads2_$(date -Iseconds)"

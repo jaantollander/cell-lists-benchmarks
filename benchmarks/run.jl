@@ -38,6 +38,9 @@ s = ArgParseSettings()
     "--dir"
         default = "output"
         arg_type = AbstractString
+    "--float32"
+        help = "Use Float32 insteads of Float64."
+        action = :store_true
 end
 args = parse_args(s)
 
@@ -51,12 +54,16 @@ iterations = args["iterations"]
 seconds = args["seconds"]
 directory = args["dir"]
 benchmark = args["benchmark"]
+float32 = args["float32"]
 
 
 # --- Validate parameters ---
 length(ns) < 1 && throw(DomainError(""))
 d < 1 && throw(DomainError(""))
 r ≤ 0 && throw(DomainError(""))
+if float32
+    r = Float32(r)
+end
 
 
 # --- Trials ---
